@@ -19,14 +19,28 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-export * from "./catalog-entity-detail-registry";
-export * from "./catalog";
-export * from "./command-registry";
-export * from "./entity-settings-registry";
-export * from "./ipc";
-export * from "./kube-object-detail-registry";
-export * from "./kube-object-menu-registry";
-export * from "./registries";
-export * from "./welcome-menu-registry";
-export * from "./workloads-overview-detail-registry";
-export * from "./catalog-category-registry";
+import { initCatalogEntityDetailRegistry } from "./catalog-entity-detail-registry";
+import { initCatalog } from "./catalog";
+import { initCommandRegistry } from "./command-registry";
+import { initEntitySettingsRegistry } from "./entity-settings-registry";
+import { initIpcRendererListeners } from "./ipc";
+import { initKubeObjectDetailRegistry } from "./kube-object-detail-registry";
+import { initKubeObjectMenuRegistry } from "./kube-object-menu-registry";
+import { initRegistries } from "./registries";
+import { initWelcomeMenuRegistry } from "./welcome-menu-registry";
+import { initWorkloadsOverviewDetailRegistry } from "./workloads-overview-detail-registry";
+import { initCatalogCategoryRegistryEntries } from "./catalog-category-registry";
+
+export const initializers = {
+  CatalogEntityDetailRegistry: initCatalogEntityDetailRegistry,
+  Catalog: initCatalog,
+  CommandRegistry: initCommandRegistry,
+  EntitySettingsRegistry: initEntitySettingsRegistry,
+  IpcRendererListeners: initIpcRendererListeners,
+  KubeObjectDetailRegistry: initKubeObjectDetailRegistry,
+  KubeObjectMenuRegistry: initKubeObjectMenuRegistry,
+  Registries: initRegistries,
+  WelcomeMenuRegistry: initWelcomeMenuRegistry,
+  WorkloadsOverviewDetailRegistry: initWorkloadsOverviewDetailRegistry,
+  CatalogCategoryRegistryEntries: initCatalogCategoryRegistryEntries,
+};
