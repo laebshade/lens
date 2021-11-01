@@ -61,7 +61,7 @@ export class ContextHandler {
     return `${namespace}/services/${service}:${port}`;
   }
 
-  async getPrometheusProvider() {
+  async getPrometheusProvider(): Promise<PrometheusProvider | null> {
     if (!this.prometheusProvider) {
       const service = await this.getPrometheusService();
 
