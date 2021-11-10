@@ -21,7 +21,7 @@
 
 import { PrometheusProvider, PrometheusService } from "./provider-registry";
 import type { CoreV1Api } from "@kubernetes/client-node";
-import logger from "../logger";
+import logger from "../../common/logger";
 import { inspect } from "util";
 
 export class PrometheusLens extends PrometheusProvider {

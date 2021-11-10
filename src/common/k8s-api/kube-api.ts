@@ -25,7 +25,7 @@ import merge from "lodash/merge";
 import { isFunction } from "lodash";
 import { stringify } from "querystring";
 import { apiKubePrefix, isDevelopment } from "../../common/vars";
-import logger from "../../main/logger";
+import logger from "../../common/logger";
 import { apiManager } from "./api-manager";
 import { apiBase, apiKube } from "./index";
 import { createKubeApiURL, parseKubeApi } from "./kube-api-parse";

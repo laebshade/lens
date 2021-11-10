@@ -25,7 +25,7 @@ import type { ContextHandler } from "./context-handler";
 import path from "path";
 import fs from "fs-extra";
 import { dumpConfigYaml } from "../common/kube-helpers";
-import logger from "./logger";
+import logger from "../common/logger";
 import { LensProxy } from "./lens-proxy";
 import { AppPaths } from "../common/app-paths";
 
@@ -79,8 +79,8 @@ export class KubeconfigManager {
     try {
       await this.contextHandler.ensureServer();
       this.tempFile = await this.createProxyKubeconfig();
-    } catch (err) {
-      logger.error(`[KUBECONFIG-MANAGER]: Failed to created temp config for auth-proxy`, err);
+    } catch (error) {
+      logger.error(`[KUBECONFIG-MANAGER]: Failed to created temp config for auth-proxy`, error);
     }
   }
 

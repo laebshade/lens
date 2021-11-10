@@ -21,7 +21,7 @@
 
 import type { CoreV1Api } from "@kubernetes/client-node";
 import { Singleton } from "../../common/utils";
-import logger from "../logger";
+import logger from "../../common/logger";
 
 export type PrometheusService = {
   id: string;

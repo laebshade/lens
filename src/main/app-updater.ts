@@ -20,7 +20,7 @@
  */
 
 import { autoUpdater, UpdateInfo } from "electron-updater";
-import logger from "./logger";
+import logger from "../common/logger";
 import { isDevelopment, isLinux, isMac, isPublishConfigured, isTestEnv } from "../common/vars";
 import { delay } from "../common/utils";
 import { areArgsUpdateAvailableToBackchannel, AutoUpdateLogPrefix, broadcastMessage, onceCorrect, UpdateAvailableChannel, UpdateAvailableToBackchannel } from "../common/ipc";

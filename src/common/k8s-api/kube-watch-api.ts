@@ -30,8 +30,8 @@ import { comparer, observable, reaction, makeObservable } from "mobx";
 import { autoBind, disposer, Disposer, noop } from "../utils";
 import type { KubeApi } from "./kube-api";
 import type { KubeJsonApiData } from "./kube-json-api";
-import { isDebugging, isProduction } from "../vars";
 import type { KubeObject } from "./kube-object";
+import logger from "../logger";
 
 export interface IKubeWatchEvent<T extends KubeJsonApiData> {
   type: "ADDED" | "MODIFIED" | "DELETED" | "ERROR";
@@ -160,10 +160,6 @@ export class KubeWatchApi {
   }
 
   protected log({ message, cssStyle = "", meta = {}}: IKubeWatchLog) {
-    if (isProduction && !isDebugging) {
-      return;
-    }
-
     const logInfo = [`%c[KUBE-WATCH-API]:`, `font-weight: bold; ${cssStyle}`, message].flat().map(String);
     const logMeta = {
       time: new Date().toLocaleString(),
@@ -171,9 +167,9 @@ export class KubeWatchApi {
     };
 
     if (message instanceof Error) {
-      console.error(...logInfo, logMeta);
+      logger.error(...logInfo, logMeta);
     } else {
-      console.info(...logInfo, logMeta);
+      logger.debug(...logInfo, logMeta);
     }
   }
 }
