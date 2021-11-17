@@ -37,6 +37,15 @@ export type KubeObjectConstructor<K extends KubeObject> = (new (data: KubeJsonAp
   apiBase?: string;
 };
 
+export interface KubeOwnerReference {
+  apiVersion: string;
+  kind: string;
+  name: string;
+  uid: string;
+  controller: boolean;
+  blockOwnerDeletion: boolean;
+}
+
 export interface KubeObjectMetadata {
   uid: string;
   name: string;
@@ -53,14 +62,7 @@ export interface KubeObjectMetadata {
   annotations?: {
     [annotation: string]: string;
   };
-  ownerReferences?: {
-    apiVersion: string;
-    kind: string;
-    name: string;
-    uid: string;
-    controller: boolean;
-    blockOwnerDeletion: boolean;
-  }[];
+  ownerReferences?: KubeOwnerReference[];
 }
 
 export interface KubeStatusData {
@@ -215,7 +217,7 @@ export class KubeObject<Metadata extends KubeObjectMetadata = KubeObjectMetadata
   ]);
 
   constructor(data: KubeJsonApiData) {
-    if (typeof data !== "object") { 
+    if (typeof data !== "object") {
       throw new TypeError(`Cannot create a KubeObject from ${typeof data}`);
     }
 
@@ -329,9 +331,9 @@ export class KubeObject<Metadata extends KubeObjectMetadata = KubeObjectMetadata
    * Perform a full update (or more specifically a replace)
    *
    * Note: this is brittle if `data` is not actually partial (but instead whole).
-   * As fields such as `resourceVersion` will probably out of date. This is a 
+   * As fields such as `resourceVersion` will probably out of date. This is a
    * common race condition.
-   * 
+   *
    * @deprecated use KubeApi.update instead
    */
   async update(data: Partial<this>): Promise<KubeJsonApiData | null> {
