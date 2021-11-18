@@ -27,17 +27,35 @@ import { observer } from "mobx-react";
 import type { Pod } from "../../../common/k8s-api/endpoints";
 import { Badge } from "../badge";
 import { GroupSelectOption, Select, SelectOption } from "../select";
-import { logTabStore } from "./log-tab.store";
+import { LogTabData, logTabStore } from "./log-tab.store";
 import type { TabId } from "./dock.store";
+
+export interface LogResourceSelectorStore {
+  changeSelectedPod(tabId: TabId, newSelectedPod: Pod): void;
+  mergeData(tabId: TabId, data: Partial<LogTabData>): void;
+}
 
 export interface LogResourceSelectorProps {
   tabId: TabId;
   pod: Pod;
   pods: Pod[];
   selectedContainer: string;
+  store?: LogResourceSelectorStore;
 }
 
-export const LogResourceSelector = observer(({ tabId, pod, pods, selectedContainer }: LogResourceSelectorProps) => {
+function getSelected<T>(groups: GroupSelectOption<SelectOption<T>>[], value: T): SelectOption<T> | undefined {
+  for (const group of groups) {
+    for (const option of group.options) {
+      if (option.value === value) {
+        return option;
+      }
+    }
+  }
+
+  return undefined;
+}
+
+export const LogResourceSelector = observer(({ tabId, pod, pods, selectedContainer, store = logTabStore }: LogResourceSelectorProps) => {
   const containers = pod.getContainers();
   const initContainers = pod.getInitContainers();
 
@@ -72,16 +90,16 @@ export const LogResourceSelector = observer(({ tabId, pod, pods, selectedContain
       <span>Pod</span>
       <Select
         options={podSelectOptions}
-        value={{ label: pod.getName(), value: pod }}
-        onChange={({ value }) => logTabStore.changeSelectedPod(tabId, value)}
+        value={getSelected(podSelectOptions, pod)}
+        onChange={({ value }) => store.changeSelectedPod(tabId, value)}
         autoConvertOptions={false}
         className="pod-selector"
       />
       <span>Container</span>
       <Select
         options={containerSelectOptions}
-        value={{ label: selectedContainer, value: selectedContainer }}
-        onChange={({ value }) => logTabStore.mergeData(tabId, { selectedContainer: value })}
+        value={getSelected(containerSelectOptions, selectedContainer)}
+        onChange={({ value }) => store.mergeData(tabId, { selectedContainer: value })}
         autoConvertOptions={false}
         className="container-selector"
       />
