@@ -32,15 +32,15 @@ import { initWorkloadsOverviewDetailRegistry } from "./workloads-overview-detail
 import { initCatalogCategoryRegistryEntries } from "./catalog-category-registry";
 
 export const initializers = {
-  CatalogEntityDetailRegistry: initCatalogEntityDetailRegistry,
-  Catalog: initCatalog,
+  Registries: initRegistries, // This line must be must be first
   CommandRegistry: initCommandRegistry,
   EntitySettingsRegistry: initEntitySettingsRegistry,
-  IpcRendererListeners: initIpcRendererListeners,
-  KubeObjectDetailRegistry: initKubeObjectDetailRegistry,
   KubeObjectMenuRegistry: initKubeObjectMenuRegistry,
-  Registries: initRegistries,
+  KubeObjectDetailRegistry: initKubeObjectDetailRegistry,
   WelcomeMenuRegistry: initWelcomeMenuRegistry,
   WorkloadsOverviewDetailRegistry: initWorkloadsOverviewDetailRegistry,
+  CatalogEntityDetailRegistry: initCatalogEntityDetailRegistry,
   CatalogCategoryRegistryEntries: initCatalogCategoryRegistryEntries,
+  Catalog: initCatalog,
+  IpcRendererListeners: initIpcRendererListeners,
 };
