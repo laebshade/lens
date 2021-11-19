@@ -181,7 +181,11 @@ export abstract class ShellSession {
   protected async openShellProcess(shell: string, args: string[], env: Record<string, any>) {
     const cwd = (this.cwd && await fse.pathExists(this.cwd))
     	? this.cwd
-    	: env.HOME;
+    	: (
+        isWindows
+          ? env.USERPROFILE
+          : env.HOME
+      );
     const { shellProcess, resume } = this.ensureShellProcess(shell, args, env, cwd);
 
     if (resume) {
